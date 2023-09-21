@@ -37,7 +37,9 @@ public class ProductService {
 
     // (기능2) 상품 상세보기
     public ProductResponse.FindByIdDTO findById(int id) {
-        return null;
+        Product product = productJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("해당 상품을 찾을 수 없습니다."));
+        return new ProductResponse.FindByIdDTO(product);
     }
 
 }
