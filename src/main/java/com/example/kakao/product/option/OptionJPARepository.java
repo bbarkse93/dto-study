@@ -8,5 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface OptionJPARepository extends JpaRepository<Option, Integer> {
 
+    List<Option> findByProductId(@Param("productId") Integer productId);
 
 }
