@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception404;
+import com.example.kakao.product.ProductJPARepository;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
@@ -17,9 +18,12 @@ public class CartService {
 
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
+    private final ProductJPARepository productJPARepository;
 
     // (기능3) 장바구니 조회
     public CartResponse.FindAllByUserDTO findAllByUser(User sessionUser) {
+        List<Cart> carts = cartJPARepository.findAllByUserId(sessionUser.getId());
+
         return null;
     }
 
