@@ -19,13 +19,11 @@ public class CartResponse{
        private Integer totalPrice;
        private List<ProductDTO> products;
 
-        public FindAllByUserDTO(Integer totalPrice, List<Product> products, List<Cart> carts) {
-            this.totalPrice = totalPrice;
-            this.products = products.stream()
-
-                    .map(p -> {
-                        return new ProductDTO(p, carts);
-                    })
+        public FindAllByUserDTO(List<Cart> carts) {
+            this.totalPrice = carts.stream().mapToInt(cart -> cart.getPrice()).sum();
+            this.products = carts.stream()
+                    .map(cart -> cart.getOption().getProduct()).distinct()
+                    .map(product -> new ProductDTO(product, carts))
                     .collect(Collectors.toList());
         }
 
@@ -39,18 +37,19 @@ public class CartResponse{
                 this.productId = product.getId();
                 this.productName = product.getProductName();
                 this.carts = carts.stream()
+                        .filter(cart -> cart.getOption().getProduct().getId() == product.getId())
                         .map(c -> new CartDTO(c) )
                         .collect(Collectors.toList());
             }
             @Getter @Setter
             public class CartDTO{
-                private Integer CartId;
+                private Integer cartId;
                 private Integer quantity;
                 private Integer cartPrice;
                 private Option option;
 
                 public CartDTO(Cart cart) {
-                    CartId = cart.getId();
+                    this.cartId = cart.getId();
                     this.quantity = cart.getQuantity();
                     this.cartPrice = cart.getPrice();
                     this.option = cart.getOption();
