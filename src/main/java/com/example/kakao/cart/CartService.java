@@ -26,6 +26,12 @@ public class CartService {
         return new CartResponse.FindAllByUserDTO(carts);
     }
 
+    // (기능3) 장바구니 조회 (풀이)
+    public CartResponse.FindAllByUserDTOT findAllByUserT(User sessionUser) {
+        List<Cart> cartList = cartJPARepository.findAllByUserId(sessionUser.getId());
+        return new CartResponse.FindAllByUserDTOT(cartList);
+    }
+
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {

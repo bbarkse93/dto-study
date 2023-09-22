@@ -30,8 +30,20 @@ public class CartRestController {
         if (sessionUser == null) {
             throw new Exception401("인증되지 않았습니다");
         }
+
         CartResponse.FindAllByUserDTO responseDTO = cartService.findAllByUser(sessionUser);
         return ResponseEntity.ok(responseDTO);
+    }
+
+    // (기능3) 장바구니 조회 (풀이)
+    @GetMapping("/cartsT")
+    public ResponseEntity<?> findAllByUserT() {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            throw new Exception401("인증되지 않았습니다");
+        }
+        CartResponse.FindAllByUserDTOT responseDTO = cartService.findAllByUserT(sessionUser);
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     // 장바구니 담기
